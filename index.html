@@ -4,217 +4,48 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PublicICQ Alpha 0.3 — Ретро-мессенджер в духе 2005 года</title>
+  <link rel="icon" href="icon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" href="icon.png">
   <style>
-    body {
-      margin: 0;
-      padding: 16px;
-      background-color: #3A6EA5;
-      font-family: Tahoma, Verdana, Arial, sans-serif;
-      font-size: 13px;
-      color: #111111;
-    }
-    .window {
-      max-width: 780px;
-      margin: 0 auto;
-      background-color: #D4D0C8;
-      border: 3px outset #FFFFFF;
-      box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.35);
-    }
-    .titlebar {
-      background: linear-gradient(90deg, #1B5E20, #2E7D32, #43A047);
-      color: #FFFFFF;
-      padding: 8px 12px;
-      font-weight: bold;
-      font-size: 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .titlebar-btns span {
-      display: inline-block;
-      background: #D4D0C8;
-      color: #000;
-      border: 2px outset #FFF;
-      width: 18px;
-      height: 16px;
-      text-align: center;
-      line-height: 14px;
-      font-size: 11px;
-      margin-left: 2px;
-    }
-    .menubar {
-      background-color: #D4D0C8;
-      border-bottom: 1px solid #808080;
-      padding: 4px 10px;
-      font-size: 12px;
-    }
-    .menubar a {
-      color: #000;
-      text-decoration: none;
-      margin-right: 14px;
-    }
-    .menubar a:hover {
-      text-decoration: underline;
-    }
-    .content {
-      padding: 16px;
-    }
-    .hero-box {
-      background-color: #FFFFFF;
-      border: 2px inset #808080;
-      padding: 16px;
-      margin-bottom: 14px;
-    }
-    .hero-title {
-      margin: 0 0 6px 0;
-      font-size: 20px;
-      color: #1B5E20;
-    }
-    .badge {
-      display: inline-block;
-      background-color: #FFEB3B;
-      color: #111;
-      border: 1px solid #808080;
-      padding: 2px 7px;
-      font-weight: bold;
-      font-size: 11px;
-      vertical-align: middle;
-    }
-    .release-banner {
-      background-color: #FFFDE7;
-      border: 2px solid #FBC02D;
-      padding: 12px 14px;
-      margin-bottom: 14px;
-      font-size: 13px;
-    }
-    .countdown-wrap {
-      margin-top: 10px;
-      background-color: #111111;
-      border: 2px inset #808080;
-      padding: 10px;
-      text-align: center;
-      color: #00FF41;
-      font-family: "Courier New", Courier, monospace;
-    }
-    .countdown-label {
-      font-family: Tahoma, sans-serif;
-      font-size: 11px;
-      color: #A5D6A7;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .countdown-digits {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .cd-box {
-      background-color: #1B261B;
-      border: 1px solid #2E7D32;
-      padding: 6px 12px;
-      min-width: 64px;
-    }
-    .cd-num {
-      display: block;
-      font-size: 22px;
-      font-weight: bold;
-      color: #00FF41;
-    }
-    .cd-unit {
-      font-family: Tahoma, sans-serif;
-      font-size: 10px;
-      color: #C8E6C9;
-    }
-    .downloads {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    .dl-card {
-      flex: 1 1 320px;
-      background-color: #E8E6DF;
-      border: 2px outset #FFFFFF;
-      padding: 14px;
-    }
-    .dl-card h3 {
-      margin: 0 0 6px 0;
-      font-size: 15px;
-      color: #1B5E20;
-    }
-    .dl-btn {
-      display: inline-block;
-      margin-top: 10px;
-      background-color: #2E7D32;
-      color: #FFFFFF;
-      text-decoration: none;
-      font-weight: bold;
-      padding: 8px 16px;
-      border: 2px outset #81C784;
-      cursor: pointer;
-    }
-    .dl-btn:hover {
-      background-color: #1B5E20;
-    }
-    .dl-btn.android {
-      background-color: #1565C0;
-      border-color: #64B5F6;
-    }
-    .dl-btn.android:hover {
-      background-color: #0D47A1;
-    }
-    .section {
-      background-color: #FFFFFF;
-      border: 2px inset #808080;
-      padding: 14px;
-      margin-bottom: 14px;
-    }
-    .section h2 {
-      margin: 0 0 10px 0;
-      font-size: 15px;
-      background-color: #2E7D32;
-      color: #FFFFFF;
-      padding: 5px 10px;
-    }
-    ul {
-      margin: 0;
-      padding-left: 20px;
-      line-height: 1.6;
-    }
-    .team-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-    .team-col {
-      flex: 1 1 250px;
-    }
-    .statusbar {
-      background-color: #D4D0C8;
-      border-top: 2px groove #FFFFFF;
-      padding: 5px 10px;
-      font-size: 11px;
-      color: #333;
-      display: flex;
-      justify-content: space-between;
-    }
-    .disclaimer {
-      font-size: 11px;
-      color: #555;
-      margin-top: 8px;
-    }
+    body { margin: 0; padding: 16px; background: #3A6EA5; font-family: Tahoma, Arial, sans-serif; font-size: 13px; color: #111; }
+    .window { max-width: 780px; margin: 0 auto; background: #D4D0C8; border: 3px outset #FFF; box-shadow: 4px 4px 0 rgba(0,0,0,0.35); }
+    .titlebar { background: linear-gradient(90deg, #1B5E20, #2E7D32, #43A047); color: #FFF; padding: 8px 12px; font-weight: bold; font-size: 14px; display: flex; justify-content: space-between; align-items: center; }
+    .titlebar-btns span { display: inline-block; background: #D4D0C8; color: #000; border: 2px outset #FFF; width: 18px; height: 16px; text-align: center; line-height: 14px; font-size: 11px; margin-left: 2px; }
+    .menubar { background: #D4D0C8; border-bottom: 1px solid #808080; padding: 4px 10px; font-size: 12px; }
+    .menubar a { color: #000; text-decoration: none; margin-right: 14px; }
+    .menubar a:hover { text-decoration: underline; }
+    .content { padding: 16px; }
+    .hero-box, .section { background: #FFF; border: 2px inset #808080; padding: 14px; margin-bottom: 14px; }
+    .hero-title { margin: 0 0 6px 0; font-size: 20px; color: #1B5E20; }
+    .badge { display: inline-block; background: #FFEB3B; color: #111; border: 1px solid #808080; padding: 2px 7px; font-weight: bold; font-size: 11px; vertical-align: middle; }
+    .release-banner { background: #FFFDE7; border: 2px solid #FBC02D; padding: 12px 14px; margin-bottom: 14px; }
+    .countdown-wrap { margin-top: 10px; background: #111; border: 2px inset #808080; padding: 10px; text-align: center; color: #00FF41; font-family: "Courier New", monospace; }
+    .countdown-label { font-family: Tahoma, sans-serif; font-size: 11px; color: #A5D6A7; margin-bottom: 6px; text-transform: uppercase; }
+    .countdown-digits { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .cd-box { background: #1B261B; border: 1px solid #2E7D32; padding: 6px 12px; min-width: 64px; }
+    .cd-num { display: block; font-size: 22px; font-weight: bold; color: #00FF41; }
+    .cd-unit { font-family: Tahoma, sans-serif; font-size: 10px; color: #C8E6C9; }
+    .downloads { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+    .dl-card { flex: 1 1 320px; background: #E8E6DF; border: 2px outset #FFF; padding: 14px; }
+    .dl-card h3 { margin: 0 0 6px 0; font-size: 15px; color: #1B5E20; }
+    .dl-btn { display: inline-block; margin-top: 10px; background: #2E7D32; color: #FFF; text-decoration: none; font-weight: bold; padding: 8px 16px; border: 2px outset #81C784; }
+    .dl-btn:hover { background: #1B5E20; }
+    .dl-btn.android { background: #1565C0; border-color: #64B5F6; }
+    .dl-btn.android:hover { background: #0D47A1; }
+    .section h2 { margin: 0 0 10px 0; font-size: 15px; background: #2E7D32; color: #FFF; padding: 5px 10px; }
+    ul { margin: 0; padding-left: 20px; line-height: 1.6; }
+    .team-grid { display: flex; flex-wrap: wrap; gap: 16px; }
+    .team-col { flex: 1 1 250px; }
+    .statusbar { background: #D4D0C8; border-top: 2px groove #FFF; padding: 5px 10px; font-size: 11px; color: #333; display: flex; justify-content: space-between; }
+    .disclaimer { font-size: 11px; color: #555; margin-top: 8px; }
   </style>
 </head>
 <body>
-
 <div class="window">
   <div class="titlebar">
     <span>🌻 PublicICQ — Официальный сайт проекта</span>
-    <div class="titlebar-btns">
-      <span>_</span><span>□</span><span>×</span>
-    </div>
+    <div class="titlebar-btns"><span>_</span><span>□</span><span>×</span></div>
   </div>
 
   <div class="menubar">
@@ -226,17 +57,12 @@
   <div class="content">
     <div class="hero-box">
       <h1 class="hero-title">🌻 PublicICQ <span class="badge">Alpha 0.3 PC / 1.5 Beta Mobile</span></h1>
-      <p style="margin: 6px 0 0 0; line-height: 1.5;">
-        Лёгкий ретро-мессенджер в духе старой доброй аськи 2005 года. Без привязки к номеру телефона,
-        без рекламы и тяжёлых движков — зашёл по нику, ввёл код комнаты и общаешься!
-      </p>
+      <p style="margin: 6px 0 0 0; line-height: 1.5;">Лёгкий ретро-мессенджер в духе старой доброй аськи 2005 года. Без привязки к номеру телефона, без рекламы и тяжёлых движков — зашёл по нику, ввёл код комнаты и общаешься!</p>
     </div>
 
     <div class="release-banner">
       <b>📅 АНОНС БОЛЬШОГО РЕЛИЗА:</b><br>
-      🖥️ Версия для ПК (Windows) — <b>19 декабря</b> &nbsp;|&nbsp;
-      📱 Версия для телефонов (Android) — <b>20 декабря</b>
-
+      🖥️ Версия для ПК (Windows) — <b>19 декабря</b> &nbsp;|&nbsp; 📱 Версия для телефонов (Android) — <b>20 декабря</b>
       <div class="countdown-wrap">
         <div class="countdown-label" id="cd-title">До релиза версии для ПК (19 декабря) осталось:</div>
         <div class="countdown-digits" id="cd-digits">
@@ -248,19 +74,38 @@
       </div>
     </div>
 
+    <script>
+      function tick() {
+        var now = new Date(), yr = now.getFullYear();
+        if (now.getMonth() === 11 && now.getDate() > 20) yr++;
+        var pc = new Date(yr, 11, 19, 12, 0, 0).getTime();
+        var mob = new Date(yr, 11, 20, 12, 0, 0).getTime();
+        var t = now.getTime(), target = t < pc ? pc : mob;
+        var title = document.getElementById("cd-title");
+        if (t >= pc && t < mob) { title.textContent = "🎉 ПК-версия вышла! До релиза на Android (20 декабря):"; }
+        else if (t >= mob) { title.textContent = "🎉 ОФИЦИАЛЬНЫЙ РЕЛИЗ СОСТОЯЛСЯ!"; document.getElementById("cd-digits").innerHTML = "<b>PUBLICICQ 1.0 ДОСТУПЕН ДЛЯ ПК И ANDROID!</b>"; return; }
+        var diff = target - t;
+        var d = Math.floor(diff / 86400000), h = Math.floor((diff / 3600000) % 24), m = Math.floor((diff / 60000) % 60), s = Math.floor((diff / 1000) % 60);
+        document.getElementById("cd-d").textContent = (d < 10 ? "0" : "") + d;
+        document.getElementById("cd-h").textContent = (h < 10 ? "0" : "") + h;
+        document.getElementById("cd-m").textContent = (m < 10 ? "0" : "") + m;
+        document.getElementById("cd-s").textContent = (s < 10 ? "0" : "") + s;
+      }
+      tick(); setInterval(tick, 1000);
+    </script>
+
     <div class="downloads" id="download">
       <div class="dl-card">
         <h3>🖥️ PublicICQ для Windows (Alpha 0.3)</h3>
         <div>Установщик с мастером установки, ярлыком на рабочий стол и работой в системном трее.</div>
         <div style="font-size: 11px; color: #444; margin-top: 4px;">Windows 7 / 8 / 10 / 11 • PICQ-Net v1.5</div>
-        <a class="dl-btn" href="https://github.com/PublicICQ/publicicq/releases/download/v0.3-alpha/PublicICQ_Setup.exe">⬇ Скачать PublicICQ_Setup.exe</a>
+        <a class="dl-btn" href="https://github.com">⬇ Скачать PublicICQ_Setup.exe</a>
       </div>
-
       <div class="dl-card">
         <h3>📱 PublicICQ для Android (1.5 Beta)</h3>
         <div>Работает даже на старых смартфонах от <b>Android 4.4.4 KitKat</b> и современных Pixel.</div>
         <div style="font-size: 11px; color: #444; margin-top: 4px;">Android 4.4.4+ • Фоновые уведомления и граффити</div>
-        <a class="dl-btn android" href="https://github.com/PublicICQ/publicicq/releases/download/v1.5-beta-mobile/PublicICQ.apk">⬇ Скачать PublicICQ.apk</a>
+        <a class="dl-btn android" href="https://github.com">⬇ Скачать PublicICQ.apk</a>
       </div>
     </div>
 
@@ -278,25 +123,10 @@
     <div class="section" id="team">
       <h2>👥 Команда проекта PublicICQ</h2>
       <div class="team-grid">
-        <div class="team-col">
-          <b>Основатели проекта:</b>
-          <ul>
-            <li><b>User1A4W5E</b></li>
-            <li><b>basi</b></li>
-          </ul>
-        </div>
-        <div class="team-col">
-          <b>Тестировщики:</b>
-          <ul>
-            <li><b>Oleg_Petrovich</b></li>
-            <li><b>Beleberda37</b></li>
-            <li><b>Kirilltop173</b></li>
-          </ul>
-        </div>
+        <div class="team-col"><b>Основатели проекта:</b><ul><li><b>User1A4W5E</b></li><li><b>basi</b></li></ul></div>
+        <div class="team-col"><b>Тестировщики:</b><ul><li><b>Oleg_Petrovich</b></li><li><b>Beleberda37</b></li><li><b>Kirilltop173</b></li></ul></div>
       </div>
-      <div class="disclaimer">
-        PublicICQ является независимым фанатским ретро-проектом, не имеет ничего общего с оригинальной ICQ и не связан с её правообладателями.
-      </div>
+      <div class="disclaimer">PublicICQ является независимым фанатским ретро-проектом, не имеет ничего общего с оригинальной ICQ и не связан с её правообладателями.</div>
     </div>
   </div>
 
@@ -305,35 +135,5 @@
     <span>© 2026 PublicICQ Team</span>
   </div>
 </div>
-
-<script>
-  function tick() {
-    var now = new Date();
-    var yr = now.getFullYear();
-    if (now.getMonth() === 11 && now.getDate() > 20) yr++;
-    var pc = new Date(yr, 11, 19, 12, 0, 0).getTime();
-    var mob = new Date(yr, 11, 20, 12, 0, 0).getTime();
-    var t = now.getTime();
-    var target = t < pc ? pc : mob;
-    var title = document.getElementById("cd-title");
-
-    if (t >= pc && t < mob) {
-      title.textContent = "🎉 ПК-версия вышла! До релиза на Android (20 декабря):";
-    } else if (t >= mob) {
-      title.textContent = "🎉 ОФИЦИАЛЬНЫЙ РЕЛИЗ СОСТОЯЛСЯ!";
-      document.getElementById("cd-digits").innerHTML = "<b style='font-size:15px;'>PUBLICICQ 1.0 ДОСТУПЕН ДЛЯ ПК И ANDROID!</b>";
-      return;
-    }
-
-    var diff = target - t;
-var d = Math.floor(diff / 86400000);
-var h = Math.floor((diff / 3600000) % 24);
-var m = Math.floor((diff / 60000) % 60);
-var s = Math.floor((diff / 1000) % 60);
-document.getElementById("cd-d").textContent = (d < 10 ? "0" : "") + d;
-document.getElementById("cd-h").textContent = (h < 10 ? "0" : "") + h;
-document.getElementById("cd-m").textContent = (m < 10 ? "0" : "") + m;
-document.getElementById("cd-s").textContent = (s < 10 ? "0" : "") + s;
-}
-tick();
-setInterval(tick, 1000);
+</body>
+</html>
