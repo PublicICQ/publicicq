@@ -1,66 +1,344 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<!DOCTYPE html>
+<html lang="ru">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>PublicICQ - Главная страница</title>
-<link rel="shortcut icon" href="icon.ico">
-<style>
-body{background:#3a6ea5;font-family:Verdana,Tahoma,sans-serif;font-size:11px;color:#000;margin:15px}
-td{font-size:11px;line-height:1.45}
-a{color:#005500;font-weight:bold}
-a:hover{color:#cc0000}
-.tbl{background:#d4d0c8;border:2px outset #fff}
-.hdr{background:#2e7d32;color:#fff;font-weight:bold;padding:5px 8px;font-size:12px}
-.menu{background:#ece9d8;border:1px inset #808080;padding:8px}
-.main{background:#fff;border:1px inset #808080;padding:12px}
-.dl{display:inline-block;background:#d4d0c8;border:2px outset #fff;padding:6px 14px;color:#000;text-decoration:none;font-weight:bold}
-.dl:active{border-style:inset}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PublicICQ Alpha 0.3 — Ретро-мессенджер в духе 2005 года</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 16px;
+      background-color: #3A6EA5;
+      font-family: Tahoma, Verdana, Arial, sans-serif;
+      font-size: 13px;
+      color: #111111;
+    }
+    .window {
+      max-width: 780px;
+      margin: 0 auto;
+      background-color: #D4D0C8;
+      border: 3px outset #FFFFFF;
+      box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.35);
+    }
+    .titlebar {
+      background: linear-gradient(90deg, #1B5E20, #2E7D32, #43A047);
+      color: #FFFFFF;
+      padding: 8px 12px;
+      font-weight: bold;
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .titlebar-btns span {
+      display: inline-block;
+      background: #D4D0C8;
+      color: #000;
+      border: 2px outset #FFF;
+      width: 18px;
+      height: 16px;
+      text-align: center;
+      line-height: 14px;
+      font-size: 11px;
+      margin-left: 2px;
+    }
+    .menubar {
+      background-color: #D4D0C8;
+      border-bottom: 1px solid #808080;
+      padding: 4px 10px;
+      font-size: 12px;
+    }
+    .menubar a {
+      color: #000;
+      text-decoration: none;
+      margin-right: 14px;
+    }
+    .menubar a:hover {
+      text-decoration: underline;
+    }
+    .content {
+      padding: 16px;
+    }
+    .hero-box {
+      background-color: #FFFFFF;
+      border: 2px inset #808080;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+    .hero-title {
+      margin: 0 0 6px 0;
+      font-size: 20px;
+      color: #1B5E20;
+    }
+    .badge {
+      display: inline-block;
+      background-color: #FFEB3B;
+      color: #111;
+      border: 1px solid #808080;
+      padding: 2px 7px;
+      font-weight: bold;
+      font-size: 11px;
+      vertical-align: middle;
+    }
+    .release-banner {
+      background-color: #FFFDE7;
+      border: 2px solid #FBC02D;
+      padding: 12px 14px;
+      margin-bottom: 14px;
+      font-size: 13px;
+    }
+    .countdown-wrap {
+      margin-top: 10px;
+      background-color: #111111;
+      border: 2px inset #808080;
+      padding: 10px;
+      text-align: center;
+      color: #00FF41;
+      font-family: "Courier New", Courier, monospace;
+    }
+    .countdown-label {
+      font-family: Tahoma, sans-serif;
+      font-size: 11px;
+      color: #A5D6A7;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .countdown-digits {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .cd-box {
+      background-color: #1B261B;
+      border: 1px solid #2E7D32;
+      padding: 6px 12px;
+      min-width: 64px;
+    }
+    .cd-num {
+      display: block;
+      font-size: 22px;
+      font-weight: bold;
+      color: #00FF41;
+    }
+    .cd-unit {
+      font-family: Tahoma, sans-serif;
+      font-size: 10px;
+      color: #C8E6C9;
+    }
+    .downloads {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .dl-card {
+      flex: 1 1 320px;
+      background-color: #E8E6DF;
+      border: 2px outset #FFFFFF;
+      padding: 14px;
+    }
+    .dl-card h3 {
+      margin: 0 0 6px 0;
+      font-size: 15px;
+      color: #1B5E20;
+    }
+    .dl-btn {
+      display: inline-block;
+      margin-top: 10px;
+      background-color: #2E7D32;
+      color: #FFFFFF;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 8px 16px;
+      border: 2px outset #81C784;
+      cursor: pointer;
+    }
+    .dl-btn:hover {
+      background-color: #1B5E20;
+    }
+    .dl-btn.android {
+      background-color: #1565C0;
+      border-color: #64B5F6;
+    }
+    .dl-btn.android:hover {
+      background-color: #0D47A1;
+    }
+    .section {
+      background-color: #FFFFFF;
+      border: 2px inset #808080;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+    .section h2 {
+      margin: 0 0 10px 0;
+      font-size: 15px;
+      background-color: #2E7D32;
+      color: #FFFFFF;
+      padding: 5px 10px;
+    }
+    ul {
+      margin: 0;
+      padding-left: 20px;
+      line-height: 1.6;
+    }
+    .team-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .team-col {
+      flex: 1 1 250px;
+    }
+    .statusbar {
+      background-color: #D4D0C8;
+      border-top: 2px groove #FFFFFF;
+      padding: 5px 10px;
+      font-size: 11px;
+      color: #333;
+      display: flex;
+      justify-content: space-between;
+    }
+    .disclaimer {
+      font-size: 11px;
+      color: #555;
+      margin-top: 8px;
+    }
+  </style>
 </head>
 <body>
-<table width="740" align="center" cellpadding="4" cellspacing="0" class="tbl">
-<tr><td colspan="2" class="hdr"><img src="icon.ico" width="16" height="16" align="absmiddle"> PublicICQ — официальный сайт проекта</td></tr>
-<tr><td colspan="2" bgcolor="#ffffcc" style="border:1px solid #808080;padding:3px"><marquee scrollamount="3">Добро пожаловать на сайт PublicICQ! Текущая версия: Alpha 0.2. Релиз 1.0 намечен на декабрь, а 31 декабря выйдет новогодняя версия с мини-играми!</marquee></td></tr>
-<tr valign="top">
-<td width="175"><div class="menu">
-<b>Навигация</b><hr size="1">
-<a href="#dl">&raquo; Скачать клиент</a><br>
-<a href="#news">&raquo; Новости</a><br>
-<a href="#faq">&raquo; Частые вопросы</a><br>
-<a href="#about">&raquo; Авторы</a><br><br>
-<b>Статус проекта</b><hr size="1">
-Сборка: <b>Alpha 0.2</b><br>
-ОС: Windows 10 / 11<br>
-Сервер: publicevo.online<br>
-Код комнаты: <b>publicevo</b><br><br>
-<b>Сделано в</b><hr size="1">
-<span style="border:1px solid #000;padding:1px 4px;background:#fff;font-size:9px">WIN32 EXE</span>
-<span style="border:1px solid #000;padding:1px 4px;background:#fff;font-size:9px">HTML 4.01</span>
-</div></td>
-<td><div class="main">
-<a name="dl"></a><b style="font-size:13px;color:#2e7d32">Что такое PublicICQ?</b>
-<p>Это простой десктопный мессенджер в духе старой аськи 2005 года. Никаких номеров телефона, тяжелых браузерных движков и лишней рекламы. Запустил, вписал ник и код комнаты — и сидишь общаешься с друзьями.</p>
-<table width="100%" bgcolor="#f0f0f0" cellpadding="8" style="border:1px dashed #808080"><tr><td align="center">
-<b>Скачать установщик (PublicICQ Alpha 0.2)</b><br><br>
-<a href="https://github.com/PublicICQ/publicicq/releases/download/v0.2-alpha/PublicICQ_Installer.exe" class="dl">Скачать PublicICQ_Installer.exe</a><br><br>
-<font size="1" color="#555555">В установщик уже вшит набор стикеров. При установке программа сама пропишется в автозагрузку (можно отключить галочкой).</font>
-</td></tr></table><br>
-<a name="news"></a><b style="font-size:12px;color:#2e7d32">Новости разработки</b><hr size="1">
-<b>21.11.2026 — Вышла сборка Alpha 0.2</b><br>
-Добавили сворачивание в трей возле часов, отправку скриншотов прямо из буфера по Ctrl+V, рисовалку граффити мышкой и 3 темы оформления (Классика, Ночь, Кислотный). Починили /unban и кликабельные ссылки.<br><br>
-<b>Скоро — Декабрьский релиз 1.0</b><br>
-Допиливаем мелкие баги по итогам тестов и открываем исходники.<br><br>
-<b>31.12.2026 — Новогодний патч</b><br>
-К Новому году добавим мини-игры прямо в чат, чтобы рубиться с друзьями.<br><br>
-<a name="faq"></a><b style="font-size:12px;color:#2e7d32">Коротко о фишках</b><hr size="1">
-- Два независимых канала (Основной и Флудилка), история переписки сохраняется на диск.<br>
-- Входящие стикеры и картинки сами складываются в папку received_stickers по датам.<br>
-- Если вписать в любой канал код <b>publicevo</b>, мессенджер начнет подтягивать чат с сервера publicevo.online прямо из логов TLauncher.<br>
-- Двойной клик по сообщению в чате подставляет @Ник в строку ввода.<br><br>
-<a name="about"></a><hr size="1">
-<div align="center"><font size="1" color="#555555">Авторы: User1A4W5E, basi | PublicICQ 2026<br>PublicICQ не имеет ничего общего с оригинальной ICQ и не связан с её правообладателями.</font></div>
-</div></td>
-</tr>
-</table>
-</body>
-</html>
+
+<div class="window">
+  <div class="titlebar">
+    <span>🌻 PublicICQ — Официальный сайт проекта</span>
+    <div class="titlebar-btns">
+      <span>_</span><span>□</span><span>×</span>
+    </div>
+  </div>
+
+  <div class="menubar">
+    <a href="#download">Скачать</a>
+    <a href="#features">Что нового в Alpha 0.3</a>
+    <a href="#team">Команда</a>
+  </div>
+
+  <div class="content">
+    <div class="hero-box">
+      <h1 class="hero-title">🌻 PublicICQ <span class="badge">Alpha 0.3 PC / 1.5 Beta Mobile</span></h1>
+      <p style="margin: 6px 0 0 0; line-height: 1.5;">
+        Лёгкий ретро-мессенджер в духе старой доброй аськи 2005 года. Без привязки к номеру телефона,
+        без рекламы и тяжёлых движков — зашёл по нику, ввёл код комнаты и общаешься!
+      </p>
+    </div>
+
+    <div class="release-banner">
+      <b>📅 АНОНС БОЛЬШОГО РЕЛИЗА:</b><br>
+      🖥️ Версия для ПК (Windows) — <b>19 декабря 2026</b> &nbsp;|&nbsp;
+      📱 Версия для телефонов (Android) — <b>20 декабря 2026</b>
+
+      <div class="countdown-wrap">
+        <div class="countdown-label" id="cd-title">До релиза версии для ПК (19 декабря) осталось:</div>
+        <div class="countdown-digits" id="cd-digits">
+          <div class="cd-box"><span class="cd-num" id="cd-d">00</span><span class="cd-unit">ДНЕЙ</span></div>
+          <div class="cd-box"><span class="cd-num" id="cd-h">00</span><span class="cd-unit">ЧАСОВ</span></div>
+          <div class="cd-box"><span class="cd-num" id="cd-m">00</span><span class="cd-unit">МИНУТ</span></div>
+          <div class="cd-box"><span class="cd-num" id="cd-s">00</span><span class="cd-unit">СЕКУНД</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="downloads" id="download">
+      <div class="dl-card">
+        <h3>🖥️ PublicICQ для Windows (Alpha 0.3)</h3>
+        <div>Установщик с мастером установки, ярлыком на рабочий стол и работой в системном трее.</div>
+        <div style="font-size: 11px; color: #444; margin-top: 4px;">Windows 7 / 8 / 10 / 11 • PICQ-Net v1.5</div>
+        <a class="dl-btn" href="#ССЫЛКА_НА_PublicICQ_Setup.exe">⬇ Скачать PublicICQ_Setup.exe</a>
+      </div>
+
+      <div class="dl-card">
+        <h3>📱 PublicICQ для Android (1.5 Beta)</h3>
+        <div>Работает даже на старых смартфонах от <b>Android 4.4.4 KitKat</b> и современных Pixel.</div>
+        <div style="font-size: 11px; color: #444; margin-top: 4px;">Android 4.4.4+ • Фоновые уведомления и граффити</div>
+        <a class="dl-btn android" href="#ССЫЛКА_НА_PublicICQ.apk">⬇ Скачать PublicICQ.apk</a>
+      </div>
+    </div>
+
+    <div class="section" id="features">
+      <h2>✨ Что нового в версии Alpha 0.3</h2>
+      <ul>
+        <li><b>Продвинутое граффити (по идее Oleg_Petrovich):</b> RGB-выбор любого цвета с 4 слотами сохранения, заливка замкнутых областей, ластик и настройка толщины кисти.</li>
+        <li><b>Цитирование сообщений:</b> выделите любую фразу в чате, нажмите правую кнопку мыши и выберите «Цитировать выделенное».</li>
+        <li><b>Самоуничтожающиеся сообщения:</b> команда <code>/secret текст</code> отправляет сообщение, которое бесследно исчезает через 10 секунд у всех участников.</li>
+        <li><b>Работа в фоне и трей:</b> при закрытии окна на крестик [×] мессенджер сворачивается в трей около часов и присылает уведомления Windows.</li>
+        <li><b>Стикеры, смайлы и пранки:</b> отправка стикеров, автосохранение входящих картинок по датам и фирменная вирус-тряска!</li>
+      </ul>
+    </div>
+
+    <div class="section" id="team">
+      <h2>👥 Команда проекта PublicICQ</h2>
+      <div class="team-grid">
+        <div class="team-col">
+          <b>Основатели проекта:</b>
+          <ul>
+            <li><b>User1A4W5E</b></li>
+            <li><b>basi</b></li>
+          </ul>
+        </div>
+        <div class="team-col">
+          <b>Тестировщики:</b>
+          <ul>
+            <li><b>Oleg_Petrovich</b></li>
+            <li><b>Beleberda37</b></li>
+            <li><b>Kirilltop173</b></li>
+          </ul>
+        </div>
+      </div>
+      <div class="disclaimer">
+        PublicICQ является независимым фанатским ретро-проектом, не имеет ничего общего с оригинальной ICQ и не связан с её правообладателями.
+      </div>
+    </div>
+  </div>
+
+  <div class="statusbar">
+    <span>Статус сети: В сети ● (PICQ-Net v1.5)</span>
+    <span>© 2026 PublicICQ Team</span>
+  </div>
+</div>
+
+<script>
+  (function() {
+    var pcRelease = new Date("2026-12-19T12:00:00+03:00").getTime();
+    var mobRelease = new Date("2026-12-20T12:00:00+03:00").getTime();
+
+    function pad(n) {
+      return n < 10 ? "0" + n : n;
+    }
+
+    function updateTimer() {
+      var now = Date.now();
+      var target = pcRelease;
+      var titleEl = document.getElementById("cd-title");
+
+      if (now >= pcRelease && now < mobRelease) {
+        target = mobRelease;
+        titleEl.innerHTML = "🎉 ПК-версия вышла! До релиза на Android (20 декабря):";
+      } else if (now >= mobRelease) {
+        titleEl.innerHTML = "🎉 ОФИЦИАЛЬНЫЙ РЕЛИЗ СОСТОЯЛСЯ! СКАЧИВАЙТЕ НИЖЕ!";
+        document.getElementById("cd-digits").innerHTML = "<b style='font-size:16px;'>PUBLICICQ 1.0 ДОСТУПЕН ДЛЯ ПК И ANDROID!</b>";
+        return;
+      }
+
+      var diff = target - now;
+var d = Math.floor(diff / (1000 * 60 * 60 * 24));
+var h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+var m = Math.floor((diff / 1000 / 60) % 60);
+var s = Math.floor((diff / 1000) % 60);
+document.getElementById("cd-d").textContent = pad(d);
+document.getElementById("cd-h").textContent = pad(h);
+document.getElementById("cd-m").textContent = pad(m);
+document.getElementById("cd-s").textContent = pad(s);
+}
+updateTimer();
+setInterval(updateTimer, 1000);
+})();
