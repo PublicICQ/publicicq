@@ -234,16 +234,16 @@
 
     <div class="release-banner">
       <b>📅 АНОНС БОЛЬШОГО РЕЛИЗА:</b><br>
-      🖥️ Версия для ПК (Windows) — <b>19 декабря 2026</b> &nbsp;|&nbsp;
-      📱 Версия для телефонов (Android) — <b>20 декабря 2026</b>
+      🖥️ Версия для ПК (Windows) — <b>19 декабря</b> &nbsp;|&nbsp;
+      📱 Версия для телефонов (Android) — <b>20 декабря</b>
 
       <div class="countdown-wrap">
         <div class="countdown-label" id="cd-title">До релиза версии для ПК (19 декабря) осталось:</div>
         <div class="countdown-digits" id="cd-digits">
-          <div class="cd-box"><span class="cd-num" id="cd-d">00</span><span class="cd-unit">ДНЕЙ</span></div>
-          <div class="cd-box"><span class="cd-num" id="cd-h">00</span><span class="cd-unit">ЧАСОВ</span></div>
-          <div class="cd-box"><span class="cd-num" id="cd-m">00</span><span class="cd-unit">МИНУТ</span></div>
-          <div class="cd-box"><span class="cd-num" id="cd-s">00</span><span class="cd-unit">СЕКУНД</span></div>
+          <div class="cd-box"><span class="cd-num" id="cd-d">--</span><span class="cd-unit">ДНЕЙ</span></div>
+          <div class="cd-box"><span class="cd-num" id="cd-h">--</span><span class="cd-unit">ЧАСОВ</span></div>
+          <div class="cd-box"><span class="cd-num" id="cd-m">--</span><span class="cd-unit">МИНУТ</span></div>
+          <div class="cd-box"><span class="cd-num" id="cd-s">--</span><span class="cd-unit">СЕКУНД</span></div>
         </div>
       </div>
     </div>
@@ -253,14 +253,14 @@
         <h3>🖥️ PublicICQ для Windows (Alpha 0.3)</h3>
         <div>Установщик с мастером установки, ярлыком на рабочий стол и работой в системном трее.</div>
         <div style="font-size: 11px; color: #444; margin-top: 4px;">Windows 7 / 8 / 10 / 11 • PICQ-Net v1.5</div>
-        <a class="dl-btn" href="#ССЫЛКА_НА_PublicICQ_Setup.exe">⬇ Скачать PublicICQ_Setup.exe</a>
+        <a class="dl-btn" href="https://github.com/PublicICQ/publicicq/releases/download/v0.3-alpha/PublicICQ_Setup.exe">⬇ Скачать PublicICQ_Setup.exe</a>
       </div>
 
       <div class="dl-card">
         <h3>📱 PublicICQ для Android (1.5 Beta)</h3>
         <div>Работает даже на старых смартфонах от <b>Android 4.4.4 KitKat</b> и современных Pixel.</div>
         <div style="font-size: 11px; color: #444; margin-top: 4px;">Android 4.4.4+ • Фоновые уведомления и граффити</div>
-        <a class="dl-btn android" href="#ССЫЛКА_НА_PublicICQ.apk">⬇ Скачать PublicICQ.apk</a>
+        <a class="dl-btn android" href="https://github.com/PublicICQ/publicicq/releases/download/v1.5-beta-mobile/PublicICQ.apk">⬇ Скачать PublicICQ.apk</a>
       </div>
     </div>
 
@@ -307,38 +307,33 @@
 </div>
 
 <script>
-  (function() {
-    var pcRelease = new Date("2026-12-19T12:00:00+03:00").getTime();
-    var mobRelease = new Date("2026-12-20T12:00:00+03:00").getTime();
+  function tick() {
+    var now = new Date();
+    var yr = now.getFullYear();
+    if (now.getMonth() === 11 && now.getDate() > 20) yr++;
+    var pc = new Date(yr, 11, 19, 12, 0, 0).getTime();
+    var mob = new Date(yr, 11, 20, 12, 0, 0).getTime();
+    var t = now.getTime();
+    var target = t < pc ? pc : mob;
+    var title = document.getElementById("cd-title");
 
-    function pad(n) {
-      return n < 10 ? "0" + n : n;
+    if (t >= pc && t < mob) {
+      title.textContent = "🎉 ПК-версия вышла! До релиза на Android (20 декабря):";
+    } else if (t >= mob) {
+      title.textContent = "🎉 ОФИЦИАЛЬНЫЙ РЕЛИЗ СОСТОЯЛСЯ!";
+      document.getElementById("cd-digits").innerHTML = "<b style='font-size:15px;'>PUBLICICQ 1.0 ДОСТУПЕН ДЛЯ ПК И ANDROID!</b>";
+      return;
     }
 
-    function updateTimer() {
-      var now = Date.now();
-      var target = pcRelease;
-      var titleEl = document.getElementById("cd-title");
-
-      if (now >= pcRelease && now < mobRelease) {
-        target = mobRelease;
-        titleEl.innerHTML = "🎉 ПК-версия вышла! До релиза на Android (20 декабря):";
-      } else if (now >= mobRelease) {
-        titleEl.innerHTML = "🎉 ОФИЦИАЛЬНЫЙ РЕЛИЗ СОСТОЯЛСЯ! СКАЧИВАЙТЕ НИЖЕ!";
-        document.getElementById("cd-digits").innerHTML = "<b style='font-size:16px;'>PUBLICICQ 1.0 ДОСТУПЕН ДЛЯ ПК И ANDROID!</b>";
-        return;
-      }
-
-      var diff = target - now;
-var d = Math.floor(diff / (1000 * 60 * 60 * 24));
-var h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-var m = Math.floor((diff / 1000 / 60) % 60);
+    var diff = target - t;
+var d = Math.floor(diff / 86400000);
+var h = Math.floor((diff / 3600000) % 24);
+var m = Math.floor((diff / 60000) % 60);
 var s = Math.floor((diff / 1000) % 60);
-document.getElementById("cd-d").textContent = pad(d);
-document.getElementById("cd-h").textContent = pad(h);
-document.getElementById("cd-m").textContent = pad(m);
-document.getElementById("cd-s").textContent = pad(s);
+document.getElementById("cd-d").textContent = (d < 10 ? "0" : "") + d;
+document.getElementById("cd-h").textContent = (h < 10 ? "0" : "") + h;
+document.getElementById("cd-m").textContent = (m < 10 ? "0" : "") + m;
+document.getElementById("cd-s").textContent = (s < 10 ? "0" : "") + s;
 }
-updateTimer();
-setInterval(updateTimer, 1000);
-})();
+tick();
+setInterval(tick, 1000);
